@@ -1,17 +1,29 @@
-# Start from top-right or bottom-left
+
 class Solution:
     def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
-        n = len(matrix)
-        m = len(matrix[0])
-        
-        row_index = 0 
-        col_index = m-1
-        while row_index < n and col_index >= 0:
-            current = matrix[row_index][col_index] #matrix[n-1][0]
-            if current < target:
-                row_index += 1
-            elif current > target:
-                col_index -= 1
+        if not matrix or not matrix[0]:
+            return False
+
+        m = len(matrix)
+        n = len(matrix[0])
+
+        l = 0
+        r = m * n -1
+
+
+        while l <= r:
+            mid = (l + r) // 2
+            row_index = mid // n 
+            col_index = mid % n
+            #print ("####", m, n)
+            #print(mid, row_index, col_index)
+            val = matrix[row_index][col_index]
+
+            if target > val: 
+                l = mid + 1
+            elif target < val: 
+                r = mid - 1
             else:
                 return True
         return False
+         
